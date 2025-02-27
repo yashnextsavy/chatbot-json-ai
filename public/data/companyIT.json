@@ -1,0 +1,95 @@
+{
+  "company": {
+    "name": "Technology Solutions",
+    "established": 2010,
+    "location": "Silicon Valley, USA",
+    "description": "Technology Solutions is a leading provider of cutting-edge IT services, including cloud computing, cybersecurity, and AI-driven business solutions.",
+    "image": "/assets/images/TechnologySolutions.jpeg"
+  },
+  "services": [
+    {
+      "name": "Cloud Computing Solutions",
+      "description": "Scalable cloud infrastructure for businesses, ensuring high availability and security.",
+      "features": [
+        "AWS, Azure, Google Cloud Support",
+        "Auto-Scaling & Load Balancing",
+        "Enterprise-Level Security",
+        "Hybrid Cloud Architecture"
+      ],
+      "pricing": "Custom Pricing Based on Usage"
+    },
+    {
+      "name": "Cybersecurity Services",
+      "description": "Protect your business with state-of-the-art cybersecurity solutions.",
+      "features": [
+        "Advanced Threat Detection",
+        "24/7 Security Monitoring",
+        "Zero-Trust Security Model",
+        "Ransomware Protection"
+      ],
+      "pricing": "Starts at $10,000/year"
+    },
+    {
+      "name": "AI & Machine Learning Solutions",
+      "description": "Automate workflows and optimize business processes with AI-driven solutions.",
+      "features": [
+        "Predictive Analytics",
+        "AI Chatbots & Virtual Assistants",
+        "Deep Learning Models",
+        "Custom AI Model Training"
+      ],
+      "pricing": "Project-Based Pricing"
+    },
+    {
+      "name": "IT Consultancy",
+      "description": "Expert IT consultants to help businesses streamline operations and adopt new technologies.",
+      "features": [
+        "Technology Roadmap Planning",
+        "Infrastructure Optimization",
+        "Software Development Advisory",
+        "Digital Transformation Strategies"
+      ],
+      "pricing": "Starts at $100/hour"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Do you provide IT consultancy?",
+      "answer": "Yes, we offer expert IT consulting services tailored to your business needs."
+    },
+    {
+      "question": "Can Technology migrate our existing infrastructure to the cloud?",
+      "answer": "Absolutely! Our team specializes in seamless cloud migration strategies."
+    },
+    {
+      "question": "What cybersecurity measures do you offer?",
+      "answer": "We provide enterprise-grade security, including firewall protection, data encryption, and AI-based threat detection."
+    },
+    {
+      "question": "Do you offer 24/7 technical support?",
+      "answer": "Yes, our support team is available around the clock to assist with any IT issues."
+    },
+    {
+      "question": "Can I request a custom AI solution for my business?",
+      "answer": "Yes, we develop tailor-made AI solutions based on your business needs."
+    },
+    {
+      "question": "How secure is Technology's cloud hosting?",
+      "answer": "We utilize multi-layer encryption, access control, and real-time monitoring to ensure data security."
+    },
+    {
+      "question": "Do you offer managed IT services?",
+      "answer": "Yes, our managed IT services ensure the smooth operation of your IT infrastructure."
+    },
+    {
+      "question": "Can Technology help with digital transformation?",
+      "answer": "Yes, we specialize in modernizing businesses by leveraging cloud computing, AI, and automation."
+    }
+  ],
+  "contact": {
+    "phone": "+1-800-Technology",
+    "email": "support@Technology.com",
+    "hq_address": "Innovate Tower, Silicon Valley, USA",
+    "website": "https://www.Technology.com"
+  }
+}

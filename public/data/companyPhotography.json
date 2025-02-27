@@ -1,0 +1,95 @@
+{
+  "company": {
+    "name": "PixelPerfect Studios",
+    "established": 2015,
+    "location": "New York City, USA",
+    "description": "PixelPerfect Studios offers professional photography services for events, commercials, and personal projects, capturing moments with artistic precision.",
+    "image": "/assets/images/PixelPerfectStudios.jpeg"
+  },
+  "services": [
+    {
+      "name": "Wedding Photography",
+      "description": "Capture your special day with stunning, high-resolution wedding photography.",
+      "features": [
+        "Pre-Wedding Shoots",
+        "Candid & Traditional Photography",
+        "Custom Photo Albums",
+        "Drone Wedding Coverage"
+      ],
+      "pricing": "Starts at $5,000"
+    },
+    {
+      "name": "Corporate Photography",
+      "description": "Professional headshots, event coverage, and brand photography for businesses.",
+      "features": [
+        "On-Site Corporate Shoots",
+        "Product Photography",
+        "Brand Storytelling Visuals",
+        "Commercial Ad Shoots"
+      ],
+      "pricing": "Custom Pricing"
+    },
+    {
+      "name": "Portrait Photography",
+      "description": "Personalized portrait sessions for individuals, families, and models.",
+      "features": [
+        "Studio & Outdoor Shoots",
+        "Professional Lighting Setup",
+        "High-End Retouching",
+        "Instant Previews"
+      ],
+      "pricing": "Starts at $300/session"
+    },
+    {
+      "name": "Aerial & Drone Photography",
+      "description": "High-quality drone photography and videography for real estate, events, and landscapes.",
+      "features": [
+        "4K Ultra HD Video",
+        "Wide-Angle Aerial Shots",
+        "FAA-Certified Drone Pilots",
+        "Real-Time Live Streaming"
+      ],
+      "pricing": "Starts at $800/session"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Do you provide international photography services?",
+      "answer": "Yes, we are available for international travel upon request."
+    },
+    {
+      "question": "What photography equipment do you use?",
+      "answer": "We use top-tier cameras, lenses, and lighting equipment, including Canon, Sony, and Nikon professional gear."
+    },
+    {
+      "question": "Can I request custom photo editing?",
+      "answer": "Absolutely! We offer professional retouching and editing services tailored to your needs."
+    },
+    {
+      "question": "Do you offer videography services?",
+      "answer": "Yes, we provide high-quality video coverage for weddings, commercials, and events."
+    },
+    {
+      "question": "What is your cancellation policy?",
+      "answer": "Cancellations must be made at least 72 hours in advance for a full refund."
+    },
+    {
+      "question": "Do you provide drone photography?",
+      "answer": "Yes, we offer drone coverage for aerial shots, subject to weather conditions."
+    },
+    {
+      "question": "How long does it take to receive edited photos?",
+      "answer": "Typically, we deliver fully edited photos within 5-7 business days."
+    },
+    {
+      "question": "Can I book a photoshoot online?",
+      "answer": "Yes, you can schedule your session through our website or by contacting us directly."
+    }
+  ],
+  "contact": {
+    "phone": "+1-800-PIXELPERFECT",
+    "email": "info@pixelperfect.com",
+    "hq_address": "Creative Studios, New York City, USA",
+    "website": "https://www.pixelperfect.com"
+  }
+}
