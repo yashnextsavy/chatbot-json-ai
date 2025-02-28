@@ -1,10 +1,10 @@
 {
   "company": {
-    "name": "TechNova Solutions",
+    "name": "Technology Solutions",
     "established": 2010,
     "location": "Silicon Valley, USA",
-    "description": "TechNova Solutions is a leading provider of cutting-edge IT services, including cloud computing, cybersecurity, and AI-driven business solutions.",
-    "image": "/assets/images/TechNovaSolutions.jpeg"
+    "description": "Technology Solutions is a leading provider of cutting-edge IT services, including cloud computing, cybersecurity, and AI-driven business solutions.",
+    "image": "/assets/images/TechnologySolutions.jpeg"
   },
   "services": [
     {
@@ -29,7 +29,7 @@
   "testimonials": [
     {
       "name": "Sophia Richardson, CTO of DataCorp",
-      "feedback": "TechNova’s cloud solutions have transformed the way we manage our data."
+      "feedback": "Technology’s cloud solutions have transformed the way we manage our data."
     }
   ],
   "faq": [
@@ -67,9 +67,9 @@
     }
   ],
   "contact": {
-    "phone": "+1-800-TECHNOVA",
-    "email": "support@technova.com",
+    "phone": "+1-800-Technology",
+    "email": "support@Technology.com",
     "hq_address": "Innovate Tower, Silicon Valley, USA",
-    "website": "https://www.technova.com"
+    "website": "https://www.Technology.com"
   }
 }
