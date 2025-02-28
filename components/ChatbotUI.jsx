@@ -248,10 +248,17 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         }
 
         try {
+            // Get the last few messages for context (limit to last 6 to avoid token limits)
+            const contextMessages = messages.slice(-6);
+            
             const res = await fetch("/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: userInput, companyId }),
+                body: JSON.stringify({ 
+                    message: userInput, 
+                    companyId,
+                    conversationHistory: contextMessages 
+                }),
             });
             console.log("res", res);
             const data = await res.json();

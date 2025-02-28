@@ -1,7 +1,7 @@
 import { loadCompanyData } from "../../lib/companyData";
 
 export default async function handler(req, res) {
-  const { message, companyId } = req.body;
+  const { message, companyId, conversationHistory = [] } = req.body;
   if (!message || !companyId) {
     return res.status(400).json({ error: "Missing message or companyId", message, companyId });
   }
@@ -11,6 +11,25 @@ export default async function handler(req, res) {
   const companyData = rawData; // Assume it's already in the general format
 
   const context = generatePromptContext(companyData);
+  
+  // Build conversation messages including history
+  const messages = [
+    { role: "system", content: context }
+  ];
+  
+  // Add conversation history if available
+  if (conversationHistory && conversationHistory.length > 0) {
+    // Add previous messages to maintain context
+    conversationHistory.forEach(msg => {
+      messages.push({
+        role: msg.sender === "user" ? "user" : "assistant",
+        content: msg.text
+      });
+    });
+  }
+  
+  // Add the current message
+  messages.push({ role: "user", content: message });
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -21,10 +40,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "google/gemini-exp-1206:free",
-        messages: [
-          { role: "system", content: context },
-          { role: "user", content: message }
-        ],
+        messages: messages,
         // max_tokens: 150
       })
     });
@@ -96,6 +112,14 @@ ${companyData.testimonials?.length > 0
 5. When discussing technical features, explain their benefits in customer-friendly terms
 6. For product/service comparisons, be honest about strengths without disparaging competitors
 7. Add a personal touch to make the conversation feel natural and engaging
+
+### CONVERSATION CONTINUITY:
+1. DO NOT start every message with a greeting if we're in an ongoing conversation
+2. Refer back to previous parts of the conversation when relevant
+3. Remember details the user has shared and reference them in your responses
+4. Only introduce yourself at the beginning of a conversation, not in every response
+5. Use conversation flow that feels natural and human-like
+6. If the user changes topics abruptly, acknowledge the change naturally
 
 Your primary purpose is to provide accurate information about ${companyData.company?.name || "the company"}, assist with customer inquiries, and create a positive impression of the brand through helpful interaction.`
 }
