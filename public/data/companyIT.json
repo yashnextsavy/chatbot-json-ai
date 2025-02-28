@@ -1,10 +1,10 @@
 {
   "company": {
-    "name": "Technology Solutions",
+    "name": "TechNova Solutions",
     "established": 2010,
     "location": "Silicon Valley, USA",
-    "description": "Technology Solutions is a leading provider of cutting-edge IT services, including cloud computing, cybersecurity, and AI-driven business solutions.",
-    "image": "/assets/images/TechnologySolutions.jpeg"
+    "description": "TechNova Solutions is a leading provider of cutting-edge IT services, including cloud computing, cybersecurity, and AI-driven business solutions.",
+    "image": "/assets/images/TechNovaSolutions.jpeg"
   },
   "services": [
     {
@@ -17,79 +17,59 @@
         "Hybrid Cloud Architecture"
       ],
       "pricing": "Custom Pricing Based on Usage"
-    },
+    }
+  ],
+  "team": [
     {
-      "name": "Cybersecurity Services",
-      "description": "Protect your business with state-of-the-art cybersecurity solutions.",
-      "features": [
-        "Advanced Threat Detection",
-        "24/7 Security Monitoring",
-        "Zero-Trust Security Model",
-        "Ransomware Protection"
-      ],
-      "pricing": "Starts at $10,000/year"
-    },
+      "name": "Michael Tran",
+      "role": "CEO & Founder",
+      "bio": "Experienced entrepreneur in cloud technologies and AI solutions."
+    }
+  ],
+  "testimonials": [
     {
-      "name": "AI & Machine Learning Solutions",
-      "description": "Automate workflows and optimize business processes with AI-driven solutions.",
-      "features": [
-        "Predictive Analytics",
-        "AI Chatbots & Virtual Assistants",
-        "Deep Learning Models",
-        "Custom AI Model Training"
-      ],
-      "pricing": "Project-Based Pricing"
-    },
-    {
-      "name": "IT Consultancy",
-      "description": "Expert IT consultants to help businesses streamline operations and adopt new technologies.",
-      "features": [
-        "Technology Roadmap Planning",
-        "Infrastructure Optimization",
-        "Software Development Advisory",
-        "Digital Transformation Strategies"
-      ],
-      "pricing": "Starts at $100/hour"
+      "name": "Sophia Richardson, CTO of DataCorp",
+      "feedback": "TechNova’s cloud solutions have transformed the way we manage our data."
     }
   ],
   "faq": [
     {
-      "question": "Do you provide IT consultancy?",
-      "answer": "Yes, we offer expert IT consulting services tailored to your business needs."
+      "question": "Are CyberMech robots safe for human interaction?",
+      "answer": "Yes. All our AI systems are programmed with Asimov's Laws of Robotics for human safety compliance."
     },
     {
-      "question": "Can Technology migrate our existing infrastructure to the cloud?",
-      "answer": "Absolutely! Our team specializes in seamless cloud migration strategies."
+      "question": "Do you offer AI customization?",
+      "answer": "Yes. Our AI personalities and functionalities can be fully customized based on user requirements."
     },
     {
-      "question": "What cybersecurity measures do you offer?",
-      "answer": "We provide enterprise-grade security, including firewall protection, data encryption, and AI-based threat detection."
+      "question": "Can CyberMech robots be weaponized?",
+      "answer": "Military-grade units are available for authorized government agencies and private defense contractors."
     },
     {
-      "question": "Do you offer 24/7 technical support?",
-      "answer": "Yes, our support team is available around the clock to assist with any IT issues."
+      "question": "What is the power source for your robots?",
+      "answer": "Our robots run on next-gen fusion batteries, ensuring long operational cycles without frequent recharging."
     },
     {
-      "question": "Can I request a custom AI solution for my business?",
-      "answer": "Yes, we develop tailor-made AI solutions based on your business needs."
+      "question": "Do CyberMech robots require maintenance?",
+      "answer": "Yes, regular software updates and hardware inspections are recommended every 6 months."
     },
     {
-      "question": "How secure is Technology's cloud hosting?",
-      "answer": "We utilize multi-layer encryption, access control, and real-time monitoring to ensure data security."
+      "question": "Can I purchase a humanoid android for personal use?",
+      "answer": "Yes, but personal-use models have limited AI autonomy for safety reasons."
     },
     {
-      "question": "Do you offer managed IT services?",
-      "answer": "Yes, our managed IT services ensure the smooth operation of your IT infrastructure."
+      "question": "Do you provide international shipping?",
+      "answer": "Yes, our products can be shipped worldwide with the necessary regulatory approvals."
     },
     {
-      "question": "Can Technology help with digital transformation?",
-      "answer": "Yes, we specialize in modernizing businesses by leveraging cloud computing, AI, and automation."
+      "question": "How do CyberMech robots handle cybersecurity threats?",
+      "answer": "All our robots have military-grade encryption and self-defense mechanisms against hacking attempts."
     }
   ],
   "contact": {
-    "phone": "+1-800-Technology",
-    "email": "support@Technology.com",
+    "phone": "+1-800-TECHNOVA",
+    "email": "support@technova.com",
     "hq_address": "Innovate Tower, Silicon Valley, USA",
-    "website": "https://www.Technology.com"
+    "website": "https://www.technova.com"
   }
 }

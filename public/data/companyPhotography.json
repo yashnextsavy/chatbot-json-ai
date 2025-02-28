@@ -50,9 +50,32 @@
         "Real-Time Live Streaming"
       ],
       "pricing": "Starts at $800/session"
+    },
+    {
+      "name": "Portrait Sessions",
+      "description": "Professional portrait photography for individuals, families, and groups.",
+      "features": [
+        "Indoor Studio Sessions",
+        "Outdoor Natural Light",
+        "Professional Retouching",
+        "Digital and Print Options"
+      ],
+      "pricing": "Starts at $250 per session"
     }
   ],
   "faq": [
+    {
+      "question": "How far in advance should I book a wedding photographer?",
+      "answer": "We recommend booking 8-12 months in advance for wedding photography, especially for peak season dates."
+    },
+    {
+      "question": "Do you provide the raw image files?",
+      "answer": "We provide professionally edited high-resolution images. Raw files are not included in our packages but can be purchased separately."
+    },
+    {
+      "question": "What is your cancellation policy?",
+      "answer": "Deposits are non-refundable. Cancellations within 30 days of the event forfeit 50% of the total fee."
+    },
     {
       "question": "Do you provide international photography services?",
       "answer": "Yes, we are available for international travel upon request."
@@ -84,6 +107,20 @@
     {
       "question": "Can I book a photoshoot online?",
       "answer": "Yes, you can schedule your session through our website or by contacting us directly."
+    }
+  ],
+  "team": [
+    {
+      "name": "Alex Morgan",
+      "position": "Lead Photographer"
+    },
+    {
+      "name": "Jamie Chen",
+      "position": "Studio Manager"
+    },
+    {
+      "name": "Taylor Williams",
+      "position": "Portrait Specialist"
     }
   ],
   "contact": {
