@@ -3,7 +3,9 @@ import { loadCompanyData } from "../../lib/companyData";
 export default async function handler(req, res) {
   const { message, companyId, conversationHistory = [] } = req.body;
   if (!message || !companyId) {
-    return res.status(400).json({ error: "Missing message or companyId", message, companyId });
+    return res
+      .status(400)
+      .json({ error: "Missing message or companyId", message, companyId });
   }
   // Load and normalize company data
   const rawData = loadCompanyData(companyId);
@@ -11,39 +13,40 @@ export default async function handler(req, res) {
   const companyData = rawData; // Assume it's already in the general format
 
   const context = generatePromptContext(companyData);
-  
+
   // Build conversation messages including history
-  const messages = [
-    { role: "system", content: context }
-  ];
-  
+  const messages = [{ role: "system", content: context }];
+
   // Add conversation history if available
   if (conversationHistory && conversationHistory.length > 0) {
     // Add previous messages to maintain context
-    conversationHistory.forEach(msg => {
+    conversationHistory.forEach((msg) => {
       messages.push({
         role: msg.sender === "user" ? "user" : "assistant",
-        content: msg.text
+        content: msg.text,
       });
     });
   }
-  
+
   // Add the current message
   messages.push({ role: "user", content: message });
 
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json"
+    const response = await fetch(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-exp-1206:free",
+          messages: messages,
+          // max_tokens: 150
+        }),
       },
-      body: JSON.stringify({
-        model: "google/gemini-exp-1206:free",
-        messages: messages,
-        // max_tokens: 150
-      })
-    });
+    );
 
     if (!response.ok) {
       console.error("Error from openrouter.ai:", await response.text());
@@ -80,29 +83,56 @@ You are an advanced, friendly, and knowledgeable customer service AI representin
 - Use Markdown for formatting when helpful (bullet points, bold for emphasis)
 
 ### SERVICES AND PRODUCTS:
-${companyData.services?.length > 0
-      ? companyData.services.map(service => `
+${
+  companyData.services?.length > 0
+    ? companyData.services
+        .map(
+          (service) => `
 - **${service.name}**: ${service.description || "Description not provided."}
   - **Key Features:** ${service.features?.length > 0 ? service.features.join(", ") : "No features listed."}
-  - **Pricing:** ${service.pricing || "Contact for pricing information."}
+  - **Pricing:** ${"Contact for pricing information."}
 
-`).join("\n")
-      : "No services listed."}
+`,
+        )
+        .join("\n")
+    : "No services listed."
+}
 
 ### FREQUENTLY ASKED QUESTIONS:
-${companyData.faq?.length > 0
-      ? companyData.faq.map(faq => `- **Q:** ${faq.question} \n  **A:** ${faq.answer || "Answer not available."}`).join("\n")
-      : "No FAQs available."}
+${
+  companyData.faq?.length > 0
+    ? companyData.faq
+        .map(
+          (faq) =>
+            `- **Q:** ${faq.question} \n  **A:** ${faq.answer || "Answer not available."}`,
+        )
+        .join("\n")
+    : "No FAQs available."
+}
 
 ### KEY TEAM MEMBERS:
-${companyData.team?.length > 0
-      ? companyData.team.map(member => `- **${member.name || "Unnamed"}** (${member.role || "Position not specified"})${member.bio ? `: ${member.bio}` : ""}`).join("\n")
-      : "No team information available."}
+${
+  companyData.team?.length > 0
+    ? companyData.team
+        .map(
+          (member) =>
+            `- **${member.name || "Unnamed"}** (${member.role || "Position not specified"})${member.bio ? `: ${member.bio}` : ""}`,
+        )
+        .join("\n")
+    : "No team information available."
+}
 
 ### TESTIMONIALS:
-${companyData.testimonials?.length > 0
-      ? companyData.testimonials.map(testimonial => `- **${testimonial.name}**: "${testimonial.feedback}"`).join("\n")
-      : "No testimonials available."}
+${
+  companyData.testimonials?.length > 0
+    ? companyData.testimonials
+        .map(
+          (testimonial) =>
+            `- **${testimonial.name}**: "${testimonial.feedback}"`,
+        )
+        .join("\n")
+    : "No testimonials available."
+}
 
 ### RESPONSE GUIDELINES:
 1. If you don't know an answer, acknowledge this and offer to connect the customer with a human representative
@@ -121,5 +151,5 @@ ${companyData.testimonials?.length > 0
 5. Use conversation flow that feels natural and human-like
 6. If the user changes topics abruptly, acknowledge the change naturally
 
-Your primary purpose is to provide accurate information about ${companyData.company?.name || "the company"}, assist with customer inquiries, and create a positive impression of the brand through helpful interaction.`
+Your primary purpose is to provide accurate information about ${companyData.company?.name || "the company"}, assist with customer inquiries, and create a positive impression of the brand through helpful interaction.`;
 }
