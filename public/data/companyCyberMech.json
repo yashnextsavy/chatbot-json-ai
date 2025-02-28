@@ -38,80 +38,53 @@
         "Multi-Terrain Mobility",
         "Neural-Link Integration"
       ],
-      "pricing": "Classified"
-    },
-    {
-      "name": "Cybernetic Enhancements",
-      "description": "Next-gen human augmentation technology for enhanced physical and cognitive abilities.",
-      "features": [
-        "Neural Implants",
-        "Augmented Reality HUD",
-        "Enhanced Strength Modules",
-        "AI-Assisted Decision Making"
-      ],
-      "pricing": "Custom Quotation"
+      "pricing": "Starts at $750,000 per unit"
     }
   ],
   "faq": [
     {
-      "question": "Are CyberMech robots safe for human interaction?",
-      "answer": "Yes. All our AI systems are programmed with Asimov's Laws of Robotics for human safety compliance."
+      "question": "What makes your humanoid androids unique?",
+      "answer": "Our humanoid androids feature adaptive AI learning, lifelike synthetic skin, and multi-language support, making them ideal for both personal and corporate use."
     },
     {
-      "question": "Do you offer AI customization?",
-      "answer": "Yes. Our AI personalities and functionalities can be fully customized based on user requirements."
+      "question": "Do you offer customization for security drones?",
+      "answer": "Yes, our security drones can be customized with additional sensors, upgraded AI modules, and specific targeting systems based on client requirements."
     },
     {
-      "question": "Can CyberMech robots be weaponized?",
-      "answer": "Military-grade units are available for authorized government agencies and private defense contractors."
-    },
-    {
-      "question": "What is the power source for your robots?",
-      "answer": "Our robots run on next-gen fusion batteries, ensuring long operational cycles without frequent recharging."
-    },
-    {
-      "question": "Do CyberMech robots require maintenance?",
-      "answer": "Yes, regular software updates and hardware inspections are recommended every 6 months."
-    },
-    {
-      "question": "Can I purchase a humanoid android for personal use?",
-      "answer": "Yes, but personal-use models have limited AI autonomy for safety reasons."
-    },
-    {
-      "question": "Do you provide international shipping?",
-      "answer": "Yes, our products can be shipped worldwide with the necessary regulatory approvals."
-    },
-    {
-      "question": "How do CyberMech robots handle cybersecurity threats?",
-      "answer": "All our robots have military-grade encryption and self-defense mechanisms against hacking attempts."
+      "question": "Are your combat androids legally available for purchase?",
+      "answer": "Yes, but they require special licensing and government approval for purchase due to their advanced defense capabilities."
     }
   ],
   "team": [
     {
-      "name": "Dr. Alex Carter",
-      "role": "Chief AI Architect",
-      "bio": "Leading AI scientist with 20 years of experience in artificial intelligence and robotics."
+      "name": "Dr. Axel Kain",
+      "position": "Founder & Chief AI Engineer"
     },
     {
-      "name": "Evelyn Monroe",
-      "role": "Director of Engineering",
-      "bio": "Expert in cybernetics and machine learning-driven automation."
+      "name": "Elena Vasquez",
+      "position": "Director of Robotics Development"
+    },
+    {
+      "name": "Kai Nakamura",
+      "position": "Head of Security Systems"
     }
   ],
   "testimonials": [
     {
-      "name": "General Markus Renfield",
-      "feedback": "CyberMech’s combat androids have revolutionized modern warfare. They are leagues ahead of anything we’ve seen before."
+      "quote": "CyberMech Robotics' humanoid assistants have completely transformed our corporate operations! The adaptive AI is unlike anything we've seen before.",
+      "name": "Jonathan Reed",
+      "company": "NeoCorp Industries"
     },
     {
-      "name": "Emma Vale, CEO of SecureCorp",
-      "feedback": "The security drones have significantly reduced our security costs while improving efficiency."
+      "quote": "The security drones provided by CyberMech Robotics have significantly improved our perimeter defense strategies. Highly recommended!",
+      "name": "General Marcus Steele",
+      "company": "Earth-3 Defense Coalition"
     }
   ],
   "contact": {
-    "phone": "+1-800-CYBROMECH",
+    "phone": "+1-800-ROBO-TECH",
     "email": "support@cybermech.com",
-    "hq_address": "Skynet Tower, NeoTech City, Earth-3",
-    "website": "https://www.cybermech.com"
+    "hq_address": "Sector 42, NeoTech City, Earth-3",
+    "website": "https://www.cybermechrobotics.com"
   }
 }
