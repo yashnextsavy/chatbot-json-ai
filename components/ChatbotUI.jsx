@@ -33,67 +33,170 @@ export default function ChatbotUI({ companyId, onMinimize }) {
 
         // Get the last bot message to generate context-aware replies
         const lastBotMessage = [...messages].reverse().find(msg => msg.sender === 'bot');
-
         if (!lastBotMessage) return defaultRepliesByCompany[companyId] || [];
+
+        // Get the last user message to understand what they've asked
+        const lastUserMessage = [...messages].filter(msg => msg.sender === 'user').pop();
+        const userQuestion = lastUserMessage ? lastUserMessage.text.toLowerCase() : '';
 
         // Generate contextual replies based on the last bot message content
         const content = lastBotMessage.text.toLowerCase();
-
-        // CyberMech context-aware replies
+        
+        // Extract key entities and topics from the content
+        const extractKeywords = (text) => {
+            const keywords = [
+                // Products and services
+                'robot', 'android', 'drone', 'security', 'defense', 'military',
+                'cloud', 'computing', 'cyber', 'cybersecurity', 'ai', 'artificial intelligence',
+                'photography', 'wedding', 'portrait', 'event', 'photo', 'drone photography',
+                // Features and attributes
+                'price', 'cost', 'feature', 'specification', 'model', 'version',
+                'customization', 'maintenance', 'support', 'training', 'design',
+                // Business terms
+                'contract', 'service', 'package', 'consultation', 'warranty', 'guarantee'
+            ];
+            
+            return keywords.filter(keyword => text.includes(keyword));
+        };
+        
+        const botKeywords = extractKeywords(content);
+        const userKeywords = lastUserMessage ? extractKeywords(userQuestion) : [];
+        const allKeywords = [...new Set([...botKeywords, ...userKeywords])];
+        
+        // Generate company-specific contextual replies
         if (companyId === 'companyCyberMech') {
-            if (content.includes('robot') || content.includes('android')) {
+            // Robot-related context
+            if (allKeywords.some(k => ['robot', 'android', 'humanoid'].includes(k))) {
+                // Different follow-ups based on what was mentioned
+                if (content.includes('price') || content.includes('cost') || userQuestion.includes('how much')) {
+                    return [
+                        "Can I finance a purchase?",
+                        "What's included in the price?",
+                        "Are there any discounts for bulk orders?",
+                        "How does the cost compare to competitors?"
+                    ];
+                }
+                if (content.includes('feature') || content.includes('can') || content.includes('capability')) {
+                    return [
+                        "Can they recognize faces?",
+                        "How long does the battery last?",
+                        "Can they operate autonomously?",
+                        "How do they handle unexpected situations?"
+                    ];
+                }
                 return [
-                    "What are the safety features?",
-                    "How much do they cost?",
+                    "How much customization is possible?",
                     "What maintenance is required?",
-                    "Are they customizable?"
+                    "How do they compare to human workers?",
+                    "What's your most advanced model?"
                 ];
-            } else if (content.includes('security') || content.includes('defense')) {
+            }
+            
+            // Security and defense context
+            else if (allKeywords.some(k => ['security', 'defense', 'military', 'protection'].includes(k))) {
+                if (content.includes('military') || content.includes('contract')) {
+                    return [
+                        "What countries do you work with?",
+                        "How do you handle ethical concerns?",
+                        "What's your most advanced system?",
+                        "Do you have civilian versions?"
+                    ];
+                }
                 return [
-                    "Do you have military contracts?",
-                    "What's your most advanced system?",
-                    "How do you ensure ethical use?",
-                    "Are there civilian applications?"
+                    "How do you prevent hacking?",
+                    "Are there any legal restrictions?",
+                    "What kind of training is provided?",
+                    "Do you offer maintenance plans?"
                 ];
             }
         }
-
+        
         // IT Solutions context-aware replies
         else if (companyId === 'companyIT') {
-            if (content.includes('cloud') || content.includes('computing')) {
+            // Cloud computing context
+            if (allKeywords.some(k => ['cloud', 'computing', 'server', 'data'].includes(k))) {
+                if (content.includes('migration') || content.includes('moving')) {
+                    return [
+                        "How long does migration typically take?",
+                        "What about data security during transition?",
+                        "Can you handle legacy systems?",
+                        "What's your uptime guarantee?"
+                    ];
+                }
                 return [
                     "What about data migration?",
-                    "How does pricing work?",
-                    "Do you offer hybrid solutions?",
-                    "What about compliance?"
+                    "How does your pricing compare to AWS?",
+                    "Do you offer hybrid cloud solutions?",
+                    "What compliance certifications do you have?"
                 ];
-            } else if (content.includes('security') || content.includes('cyber')) {
+            }
+            
+            // Security context
+            else if (allKeywords.some(k => ['security', 'cyber', 'hack', 'breach', 'ransomware'].includes(k))) {
+                if (content.includes('breach') || content.includes('incident')) {
+                    return [
+                        "What's your response time?",
+                        "Do you have a recovery process?",
+                        "Do you offer forensic analysis?",
+                        "How do you prevent future incidents?"
+                    ];
+                }
                 return [
-                    "Do you offer security audits?",
-                    "What about ransomware protection?",
-                    "How do you handle breaches?",
-                    "What certifications do you have?"
+                    "Do you offer penetration testing?",
+                    "What about employee security training?",
+                    "How do you handle zero-day threats?",
+                    "Do you have 24/7 monitoring?"
                 ];
             }
         }
-
+        
         // Photography context-aware replies
         else if (companyId === 'companyPhotography') {
-            if (content.includes('wedding') || content.includes('event')) {
+            // Wedding/event context
+            if (allKeywords.some(k => ['wedding', 'event', 'ceremony', 'party'].includes(k))) {
+                if (content.includes('package') || content.includes('price') || content.includes('cost')) {
+                    return [
+                        "What's included in your basic package?",
+                        "Do you offer video services too?",
+                        "Are there any seasonal discounts?",
+                        "Do you require a deposit?"
+                    ];
+                }
                 return [
-                    "Do you have package deals?",
                     "How many photographers attend?",
-                    "Do you edit the photos?",
-                    "How long until we get the photos?"
-                ];
-            } else if (content.includes('portrait') || content.includes('session')) {
-                return [
-                    "Do you have a studio?",
-                    "Can we choose locations?",
-                    "What about outfit changes?",
-                    "How many final images do we get?"
+                    "Do you have backup equipment?",
+                    "How quickly do we get the photos?",
+                    "Can we create a shot list in advance?"
                 ];
             }
+            
+            // Portrait context
+            else if (allKeywords.some(k => ['portrait', 'session', 'headshot', 'family'].includes(k))) {
+                if (content.includes('location') || content.includes('studio')) {
+                    return [
+                        "Do you charge extra for outdoor locations?",
+                        "How many locations in one session?",
+                        "Can we bring pets to the shoot?",
+                        "What about bad weather backup plans?"
+                    ];
+                }
+                return [
+                    "Do you provide makeup services?",
+                    "How many outfit changes are allowed?",
+                    "Do you edit all the photos?",
+                    "Can we purchase additional images later?"
+                ];
+            }
+        }
+        
+        // If the conversation has progressed but no specific context is detected
+        if (messages.length > 3) {
+            return [
+                "Tell me more about that",
+                "Can you provide specific examples?",
+                "What are the advantages of this?",
+                "How does this compare to alternatives?"
+            ];
         }
 
         // If no specific context is detected, use defaults
@@ -764,10 +867,11 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     {generateContextualReplies(messages, companyId).map((reply, index) => (
                         <button 
                             key={index}
-                            className="quick-reply-btn"
+                            className="quick-reply-button"
                             onClick={() => {
                                 setUserInput(reply);
-                                setTimeout(() => sendMessage(), 100);
+                                // Immediately send the message after setting input
+                                setTimeout(() => sendMessage(), 50);
                             }}
                         >
                             {reply}
