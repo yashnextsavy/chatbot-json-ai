@@ -1,23 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import CustomMarkdown from "./CustomMarkdown";
 
-function FeedbackButtons({ messageId, onFeedbackSubmit }) {
-    const [feedback, setFeedback] = useState(null);
-
-    const handleFeedback = (value) => {
-        setFeedback(value);
-        onFeedbackSubmit(messageId, value);
-    };
-
-    return (
-        <div>
-            <button onClick={() => handleFeedback(1)}>👍</button>
-            <button onClick={() => handleFeedback(-1)}>👎</button>
-        </div>
-    );
-}
-
-
 export default function ChatbotUI({ companyId, onMinimize }) {
     // Function to generate context-aware quick replies
     const generateContextualReplies = (messages, companyId) => {
@@ -267,7 +250,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         try {
             // Get the last few messages for context (limit to last 6 to avoid token limits)
             const contextMessages = messages.slice(-6);
-
+            
             const res = await fetch("/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -416,7 +399,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                     transition: transform 0.2s ease;
                 }
-
+                
                 .chat-header img:hover {
                     transform: scale(1.05);
                 }
@@ -713,15 +696,15 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     .message {
                         max-width: 85%;
                     }
-
+                    
                     .chat-header {
                         padding: 16px 20px;
                     }
-
+                    
                     .message-input-container {
                         padding: 12px 16px;
                     }
-
+                    
                     .quick-replies {
                         padding: 10px 16px;
                     }
@@ -757,17 +740,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                         data-time={formatTime(msg.timestamp)}
                     >
                         {msg.sender === "bot" ? (
-                            <>
-                                <CustomMarkdown response={msg.text} />
-                                <FeedbackButtons 
-                                    messageId={`${conversationId}_${index}`}
-                                    onFeedbackSubmit={(msgId, value) => {
-                                        console.log("Feedback received:", msgId, value);
-                                        // Here you could save feedback to a database
-                                        // or analytics system in the future
-                                    }}
-                                />
-                            </>
+                            <CustomMarkdown response={msg.text} />
                         ) : (
                             msg.text
                         )}
