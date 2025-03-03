@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import CustomMarkdown from "./CustomMarkdown";
-import RiveAnimatedAvatar from "./RiveAnimatedAvatar";
 
 export default function ChatbotUI({ companyId, onMinimize }) {
     // Function to generate context-aware quick replies
@@ -106,15 +105,6 @@ export default function ChatbotUI({ companyId, onMinimize }) {
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
-    const [botAnimation, setBotAnimation] = useState("idle");
-    const [triggerResponse, setTriggerResponse] = useState(false);
-
-    const getCompanyAvatar = () => {
-        if (companyId === "companyCyberMech") return "robot";
-        if (companyId === "companyIT") return "tech";
-        if (companyId === "companyPhotography") return "camera";
-        return "robot"; // Default
-    };
 
     const [companyData, setCompanyData] = useState(null);
 
@@ -236,9 +226,6 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         setMessages(newMessages);
         setUserInput("");
         setIsTyping(true);
-        
-        // Set bot animation to thinking
-        setBotAnimation("thinking");
 
         try {
             const saveResponse = await fetch("/api/saveConversation", {
@@ -283,13 +270,6 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 const keyPhrases = data.reply
                     .toLowerCase()
                     .match(/(?:robot|android|security|cloud|computing|cyber|wedding|event|portrait|session|price|cost|rate)/g) || [];
-
-                // Set bot animation to talking
-                setBotAnimation("talking");
-                setTriggerResponse(true);
-                
-                // Reset trigger after a short delay
-                setTimeout(() => setTriggerResponse(false), 300);
 
                 const updatedMessages = [...newMessages, { 
                     sender: "bot", 
@@ -733,26 +713,22 @@ export default function ChatbotUI({ companyId, onMinimize }) {
 
             {/* Chat Header */}
             <div className="chat-header">
-                <div className="chat-header-left" onClick={onMinimize}>
-                    <div className="avatar-container">
-                        <RiveAnimatedAvatar 
-                            animation={getCompanyAvatar()}
-                            size={40}
-                            animationState={isTyping ? "talking" : "idle"}
-                        />
-                    </div>
+                <div className="header-main" onClick={onMinimize}>
+                    {companyData?.company?.image && (
+                        <img src={companyData.company.image} alt={`${companyData.company.name} Logo`} />
+                    )}
                     <div>
                         Chat with {companyData?.company?.name || "AI Assistant"}
                     </div>
                 </div>
-                <button 
+                {/* <button 
                     className="minimize-btn" 
                     onClick={(e) => {
                         e.stopPropagation();
                         onMinimize();
                     }} 
                     aria-label="Minimize chat"
-                >−</button>
+                >−</button> */}
             </div>
 
             {/* Chat Messages */}
@@ -773,16 +749,9 @@ export default function ChatbotUI({ companyId, onMinimize }) {
 
                 {isTyping && (
                     <div className="typing-indicator">
-                        <RiveAnimatedAvatar 
-                            animation={getCompanyAvatar()} 
-                            size={40} 
-                            animationState="thinking"
-                        />
-                        <div className="typing-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 )}
 
