@@ -869,8 +869,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                             key={index}
                             className="quick-reply-button"
                             onClick={() => {
-                                // Set the input and immediately send without setTimeout
-                                setUserInput(reply);
+                                // Directly send without setting input field
                                 const timestamp = new Date().toISOString();
                                 const newMessages = [...messages, { sender: "user", text: reply, timestamp }];
                                 setMessages(newMessages);
