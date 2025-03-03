@@ -343,30 +343,66 @@ export default function ChatbotUI({ companyId, onMinimize }) {
     }, []);
 
     return (
-        <div className="chat-container">
+        <div className="chat-container vice-city-theme">
             <style jsx>{`
+                /* Add Vice City scanline effect */
+                .vice-city-theme::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(
+                        rgba(255, 255, 255, 0.03) 50%, 
+                        rgba(0, 0, 0, 0.03) 50%
+                    );
+                    background-size: 100% 4px;
+                    pointer-events: none;
+                    opacity: 0.15;
+                    z-index: 10;
+                }
+                
+                /* Add subtle CRT flicker */
+                @keyframes crtFlicker {
+                    0% { opacity: 0.98; }
+                    3% { opacity: 0.96; }
+                    6% { opacity: 0.98; }
+                    8% { opacity: 0.96; }
+                    10% { opacity: 0.98; }
+                    20% { opacity: 0.99; }
+                    80% { opacity: 1; }
+                }
+                
+                .vice-city-theme {
+                    animation: crtFlicker 4s infinite;
+                }
                 .chat-container {
                     display: flex;
                     flex-direction: column;
                     height: 600px;
                     max-height: 85vh;
-                    border-radius: 16px;
+                    border-radius: 2px;
                     overflow: hidden;
-                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-                    background-color: #fff;
+                    box-shadow: 0 0 10px rgba(255, 66, 167, 0.8), 0 0 20px rgba(255, 66, 167, 0.5);
+                    background-color: #1e0151;
                     transition: all 0.3s ease;
+                    border: 1px solid #ff42a7;
+                    font-family: 'Chakra Petch', 'VCR OSD Mono', 'Courier New', monospace;
                 }
 
                 .chat-header {
                     display: flex;
                     align-items: center;
                     padding: 18px 24px;
-                    background: linear-gradient(135deg, #4285f4, #0d47a1);
+                    background: linear-gradient(135deg, #ff42a7, #cc1980);
                     color: white;
                     font-weight: 600;
                     justify-content: space-between;
                     position: relative;
                     overflow: hidden;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
                 }
 
                 .chat-header::after {
@@ -487,29 +523,31 @@ export default function ChatbotUI({ companyId, onMinimize }) {
 
                 .message-input {
                     flex-grow: 1;
-                    border: 1px solid #e1e4e8;
-                    border-radius: 24px;
+                    border: 1px solid #ff42a7;
+                    border-radius: 2px;
                     padding: 14px 24px;
                     outline: none;
                     transition: all 0.3s ease;
                     font-size: 16px;
-                    background-color: #f8f9fa;
+                    background-color: rgba(12, 1, 80, 0.8);
                     padding-right: 50px;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+                    box-shadow: 0 0 5px rgba(255, 66, 167, 0.3);
+                    color: white;
+                    font-family: 'Chakra Petch', 'VCR OSD Mono', 'Courier New', monospace;
                 }
 
                 .message-input:focus {
-                    border-color: #4285f4;
-                    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
-                    background-color: #fff;
+                    border-color: #00ccff;
+                    box-shadow: 0 0 0 3px rgba(0, 204, 255, 0.15);
+                    background-color: rgba(30, 1, 81, 0.9);
                     transform: translateY(-1px);
                 }
 
                 .send-button {
-                    background: linear-gradient(135deg, #4285f4, #0d47a1);
+                    background: linear-gradient(135deg, #ff42a7, #cc1980);
                     color: white;
                     border: none;
-                    border-radius: 50%;
+                    border-radius: 2px;
                     width: 42px;
                     height: 42px;
                     display: flex;
@@ -519,7 +557,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     position: absolute;
                     right: 28px;
                     transition: all 0.3s ease;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0 0 10px rgba(255, 66, 167, 0.5);
                     overflow: hidden;
                     transform: translateZ(0);
                 }
@@ -553,13 +591,15 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 .message {
                     max-width: 75%;
                     padding: 14px 20px;
-                    border-radius: 18px;
+                    border-radius: 2px;
                     position: relative;
                     display: flex;
                     flex-direction: column;
                     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
                     transition: transform 0.2s ease;
                     animation: messageAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    font-family: 'Chakra Petch', 'VCR OSD Mono', 'Courier New', monospace;
+                    text-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
                 }
 
                 @keyframes messageAppear {
@@ -577,19 +617,21 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     transform: translateY(-1px);
                 }
 
-                .message.assistant {
+                .message.assistant, .message.bot {
                     align-self: flex-start;
-                    background-color: white;
-                    border-bottom-left-radius: 4px;
-                    color: #333;
-                    border: 1px solid rgba(0, 0, 0, 0.05);
+                    background-color: #190140;
+                    border-bottom-left-radius: 0;
+                    color: #fff;
+                    border: 1px solid #00ccff;
+                    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
                 }
 
                 .message.user {
                     align-self: flex-end;
-                    background: linear-gradient(135deg, #4285f4, #0d47a1);
+                    background: linear-gradient(135deg, #ff42a7, #cc1980);
                     color: white;
-                    border-bottom-right-radius: 4px;
+                    border-bottom-right-radius: 0;
+                    box-shadow: 0 0 10px rgba(255, 66, 167, 0.5);
                 }
 
                 .message-content {
@@ -622,21 +664,24 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 .quick-reply-button {
                     white-space: nowrap;
                     padding: 10px 18px;
-                    border-radius: 20px;
-                    background-color: #e8f0fe;
-                    color: #4285f4;
-                    border: none;
-                    font-size: 14px;
+                    border-radius: 0;
+                    background-color: #2c0173;
+                    color: white;
+                    border: 1px solid #ff42a7;
+                    font-size: 12px;
                     font-weight: 500;
                     cursor: pointer;
                     transition: all 0.2s ease;
-                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+                    box-shadow: 0 0 5px rgba(255, 66, 167, 0.3);
+                    font-family: 'Chakra Petch', 'VCR OSD Mono', 'Courier New', monospace;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
                 }
 
                 .quick-reply-button:hover {
-                    background-color: #d2e3fc;
+                    background-color: #ff42a7;
                     transform: translateY(-1px);
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 0 10px rgba(255, 66, 167, 0.8);
                 }
 
                 .quick-reply-button:active {
@@ -718,7 +763,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                         <img src={companyData.company.image} alt={`${companyData.company.name} Logo`} />
                     )}
                     <div>
-                        Chat with {companyData?.company?.name || "AI Assistant"}
+                        VICE CHAT: {companyData?.company?.name || "AI ASSISTANT"}
                     </div>
                 </div>
                 {/* <button 
