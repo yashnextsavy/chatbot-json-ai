@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ChatbotUI from "../components/ChatbotUI";
+import DarkModeToggle from "../components/DarkModeToggle";
 import Head from "next/head";
 
 export default function Home() {
@@ -22,6 +23,8 @@ export default function Home() {
         <meta name="description" content="Chat with Company AI Assistant" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
+      <DarkModeToggle />
 
       <div className="company-selector">
         <label htmlFor="company-select" className="company-select-label">Choose your virtual assistant: </label>
