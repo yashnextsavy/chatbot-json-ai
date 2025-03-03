@@ -103,13 +103,10 @@ export default function ChatbotUI({ companyId, onMinimize }) {
     const [userInput, setUserInput] = useState("");
     const [conversationId, setConversationId] = useState("");
     const [isTyping, setIsTyping] = useState(false);
-    const [typingStage, setTypingStage] = useState(0); // For advanced typing animation
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
-    const typingInterval = useRef(null);
 
     const [companyData, setCompanyData] = useState(null);
-    const [botMood, setBotMood] = useState("neutral"); // For sentiment-based responses
 
     // Focus input on load
     useEffect(() => {
@@ -221,51 +218,14 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
 
-    // Simple sentiment analysis function
-    const analyzeSentiment = (text) => {
-        const positiveWords = ['good', 'great', 'excellent', 'amazing', 'happy', 'like', 'love', 'best', 'awesome', 'thanks', 'thank'];
-        const negativeWords = ['bad', 'terrible', 'awful', 'hate', 'dislike', 'worst', 'poor', 'disappointing', 'frustrated', 'angry'];
-        
-        const lowerText = text.toLowerCase();
-        let score = 0;
-        
-        positiveWords.forEach(word => {
-            if (lowerText.includes(word)) score += 1;
-        });
-        
-        negativeWords.forEach(word => {
-            if (lowerText.includes(word)) score -= 1;
-        });
-        
-        if (score > 1) return "positive";
-        if (score < -1) return "negative";
-        return "neutral";
-    };
-
     const sendMessage = async () => {
         if (!userInput.trim()) return;
 
-        // Analyze sentiment
-        const sentiment = analyzeSentiment(userInput);
-        setBotMood(sentiment);
-
         const timestamp = new Date().toISOString();
-        const newMessages = [...messages, { 
-            sender: "user", 
-            text: userInput, 
-            timestamp,
-            sentiment // Store sentiment with the message
-        }];
+        const newMessages = [...messages, { sender: "user", text: userInput, timestamp }];
         setMessages(newMessages);
         setUserInput("");
         setIsTyping(true);
-        
-        // Start typing animation
-        let stage = 0;
-        typingInterval.current = setInterval(() => {
-            stage = (stage + 1) % 4;
-            setTypingStage(stage);
-        }, 400);
 
         try {
             const saveResponse = await fetch("/api/saveConversation", {
@@ -303,9 +263,6 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             console.log("res", res);
             const data = await res.json();
 
-            if (typingInterval.current) {
-                clearInterval(typingInterval.current);
-            }
             setIsTyping(false);
             if (data.reply) {
                 const botTimestamp = new Date().toISOString();
@@ -314,24 +271,11 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     .toLowerCase()
                     .match(/(?:robot|android|security|cloud|computing|cyber|wedding|event|portrait|session|price|cost|rate)/g) || [];
 
-                // Modify response based on sentiment
-                let adjustedReply = data.reply;
-                if (botMood === "positive") {
-                    adjustedReply = adjustedReply.replace(/\.$/, "! 😊");
-                    if (!adjustedReply.includes("Thank you") && !adjustedReply.includes("thanks")) {
-                        adjustedReply = "I'm glad to hear that! " + adjustedReply;
-                    }
-                } else if (botMood === "negative") {
-                    adjustedReply = "I'm sorry to hear that. " + adjustedReply;
-                    adjustedReply = adjustedReply.replace(/\.$/, ". Is there anything specific I can help with?");
-                }
-
                 const updatedMessages = [...newMessages, { 
                     sender: "bot", 
-                    text: adjustedReply,
+                    text: data.reply,
                     timestamp: botTimestamp,
-                    keyPhrases: Array.from(new Set(keyPhrases)), // Store unique key phrases for context
-                    mood: botMood // Store the mood
+                    keyPhrases: Array.from(new Set(keyPhrases)) // Store unique key phrases for context
                 }];
                 setMessages(updatedMessages);
 
@@ -356,9 +300,6 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 }
             }
         } catch (error) {
-            if (typingInterval.current) {
-                clearInterval(typingInterval.current);
-            }
             setIsTyping(false);
             console.error("Error fetching chatbot reply:", error);
             // Show error message to user
@@ -795,44 +736,22 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 {messages.map((msg, index) => (
                     <div 
                         key={index} 
-                        className={`message ${msg.sender} ${msg.mood || ''}`}
+                        className={`message ${msg.sender}`}
                         data-time={formatTime(msg.timestamp)}
                     >
-                        {msg.sender === "bot" && companyData?.company?.image && (
-                            <div className="message-avatar">
-                                <img 
-                                    src={companyData.company.image} 
-                                    alt={`${companyData.company.name} Avatar`}
-                                    className={`avatar ${msg.mood || 'neutral'}-mood`} 
-                                />
-                            </div>
+                        {msg.sender === "bot" ? (
+                            <CustomMarkdown response={msg.text} />
+                        ) : (
+                            msg.text
                         )}
-                        <div className="message-content-wrapper">
-                            {msg.sender === "bot" ? (
-                                <CustomMarkdown response={msg.text} />
-                            ) : (
-                                msg.text
-                            )}
-                        </div>
                     </div>
                 ))}
 
                 {isTyping && (
                     <div className="typing-indicator">
-                        <div className="avatar-container">
-                            {companyData?.company?.image && (
-                                <img 
-                                    src={companyData.company.image} 
-                                    alt={`${companyData.company.name} Avatar`}
-                                    className="typing-avatar pulse-animation" 
-                                />
-                            )}
-                        </div>
-                        <div className="typing-bubbles">
-                            <span className={typingStage >= 1 ? "active" : ""}></span>
-                            <span className={typingStage >= 2 ? "active" : ""}></span>
-                            <span className={typingStage >= 3 ? "active" : ""}></span>
-                        </div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 )}
 
