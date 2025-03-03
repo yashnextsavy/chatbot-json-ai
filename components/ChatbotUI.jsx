@@ -189,8 +189,24 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             }
         }
         
-        // If the conversation has progressed but no specific context is detected
+        // If there are multiple exchanges but no specific context detected,
+        // we might be in a deeper conversation - analyze the last bot message better
         if (messages.length > 3) {
+            // Check if the last bot message is a direct answer that doesn't need follow-up
+            const lastBotContent = lastBotMessage.text.toLowerCase();
+            
+            // If it appears to be a conclusive response (pricing info, simple yes/no, etc.)
+            if (
+                (lastBotContent.includes('price') && (lastBotContent.includes('$') || lastBotContent.includes('cost'))) ||
+                lastBotContent.length < 80 || // Very short answers might not need follow-up
+                (lastBotContent.includes('thank') && lastBotContent.includes('you')) || // Thank you messages
+                lastBotContent.includes('anything else') // Bot already asked for follow-up
+            ) {
+                // Don't show generic suggestions for conclusive responses
+                return [];
+            }
+            
+            // For ongoing conversations without specific context
             return [
                 "Tell me more about that",
                 "Can you provide specific examples?",
@@ -199,7 +215,12 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             ];
         }
 
-        // If no specific context is detected, use defaults
+        // For first-time messages or when context is lost, use defaults
+        // But if we've had more than 8 messages, don't keep showing default options
+        if (messages.length > 8) {
+            return [];
+        }
+        
         return defaultRepliesByCompany[companyId] || [];
     };
     const [messages, setMessages] = useState([]);
@@ -861,19 +882,21 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Contextual Quick Reply Suggestions */}
-            {!isTyping && messages.length > 0 && (
-                <div className="quick-replies">
-                    {generateContextualReplies(messages, companyId).map((reply, index) => (
-                        <button 
-                            key={index}
-                            className="quick-reply-button"
-                            onClick={() => {
-                                // Directly send without setting input field
-                                const timestamp = new Date().toISOString();
-                                const newMessages = [...messages, { sender: "user", text: reply, timestamp }];
-                                setMessages(newMessages);
-                                setIsTyping(true);
+            {/* Contextual Quick Reply Suggestions - only show if there are suggestions to display */}
+            {!isTyping && messages.length > 0 && (() => {
+                const suggestions = generateContextualReplies(messages, companyId);
+                return suggestions.length > 0 ? (
+                    <div className="quick-replies">
+                        {suggestions.map((reply, index) => (
+                            <button 
+                                key={index}
+                                className="quick-reply-button"
+                                onClick={() => {
+                                    // Directly send without setting input field
+                                    const timestamp = new Date().toISOString();
+                                    const newMessages = [...messages, { sender: "user", text: reply, timestamp }];
+                                    setMessages(newMessages);
+                                    setIsTyping(true);
                                 
                                 // Save conversation
                                 try {
@@ -961,8 +984,9 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                             {reply}
                         </button>
                     ))}
-                </div>
-            )}
+                    </div>
+                ) : null;
+            })()}
 
             {/* Chat Input */}
             <div className="chat-input-container">
