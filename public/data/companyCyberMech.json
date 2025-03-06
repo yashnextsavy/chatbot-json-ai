@@ -58,7 +58,8 @@
   "team": [
     {
       "name": "Dr. Axel Kain",
-      "position": "Founder & Chief AI Engineer"
+      "position": "Founder & Chief AI Engineer",
+      "bio": "Founder & Chief AI Engineer since 2022 with experience of 15+ years in field"
     },
     {
       "name": "Elena Vasquez",
@@ -71,12 +72,12 @@
   ],
   "testimonials": [
     {
-      "quote": "CyberMech Robotics' humanoid assistants have completely transformed our corporate operations! The adaptive AI is unlike anything we've seen before.",
+      "feedback": "CyberMech Robotics' humanoid assistants have completely transformed our corporate operations! The adaptive AI is unlike anything we've seen before.",
       "name": "Jonathan Reed",
       "company": "NeoCorp Industries"
     },
     {
-      "quote": "The security drones provided by CyberMech Robotics have significantly improved our perimeter defense strategies. Highly recommended!",
+      "feedback": "The security drones provided by CyberMech Robotics have significantly improved our perimeter defense strategies. Highly recommended!",
       "name": "General Marcus Steele",
       "company": "Earth-3 Defense Coalition"
     }
@@ -85,6 +86,7 @@
     "phone": "+1-800-ROBO-TECH",
     "email": "support@cybermech.com",
     "hq_address": "Sector 42, NeoTech City, Earth-3",
-    "website": "https://www.cybermechrobotics.com"
+    "website": "https://www.cybermechrobotics.com",
+    "timing":"9:00AM - 8:00PM, MON-SAT, SUN 11:00AM - 3:00PM"
   }
 }

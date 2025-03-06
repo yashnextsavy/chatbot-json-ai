@@ -10,20 +10,20 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 "Tell me about your robots",
                 "How much are humanoid androids?",
                 "Are your robots safe?",
-                "Do you offer military solutions?"
+                "Do you offer military solutions?",
             ],
             companyIT: [
                 "Cloud computing options",
                 "Cybersecurity services",
                 "AI solutions pricing",
-                "Do you offer 24/7 support?"
+                "Do you offer 24/7 support?",
             ],
             companyPhotography: [
                 "Wedding photography rates",
                 "Do you do corporate events?",
                 "Portrait session details",
-                "Drone photography options"
-            ]
+                "Drone photography options",
+            ],
         };
 
         // If there are no messages yet, use the defaults
@@ -32,195 +32,267 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         }
 
         // Get the last bot message to generate context-aware replies
-        const lastBotMessage = [...messages].reverse().find(msg => msg.sender === 'bot');
+        const lastBotMessage = [...messages]
+            .reverse()
+            .find((msg) => msg.sender === "bot");
         if (!lastBotMessage) return defaultRepliesByCompany[companyId] || [];
 
         // Get the last user message to understand what they've asked
-        const lastUserMessage = [...messages].filter(msg => msg.sender === 'user').pop();
-        const userQuestion = lastUserMessage ? lastUserMessage.text.toLowerCase() : '';
+        const lastUserMessage = [...messages]
+            .filter((msg) => msg.sender === "user")
+            .pop();
+        const userQuestion = lastUserMessage
+            ? lastUserMessage.text.toLowerCase()
+            : "";
 
         // Generate contextual replies based on the last bot message content
         const content = lastBotMessage.text.toLowerCase();
-        
+
         // Extract key entities and topics from the content
         const extractKeywords = (text) => {
             const keywords = [
                 // Products and services
-                'robot', 'android', 'drone', 'security', 'defense', 'military',
-                'cloud', 'computing', 'cyber', 'cybersecurity', 'ai', 'artificial intelligence',
-                'photography', 'wedding', 'portrait', 'event', 'photo', 'drone photography',
+                "robot",
+                "android",
+                "drone",
+                "security",
+                "defense",
+                "military",
+                "cloud",
+                "computing",
+                "cyber",
+                "cybersecurity",
+                "ai",
+                "artificial intelligence",
+                "photography",
+                "wedding",
+                "portrait",
+                "event",
+                "photo",
+                "drone photography",
                 // Features and attributes
-                'price', 'cost', 'feature', 'specification', 'model', 'version',
-                'customization', 'maintenance', 'support', 'training', 'design',
+                "price",
+                "cost",
+                "feature",
+                "specification",
+                "model",
+                "version",
+                "customization",
+                "maintenance",
+                "support",
+                "training",
+                "design",
                 // Business terms
-                'contract', 'service', 'package', 'consultation', 'warranty', 'guarantee'
+                "contract",
+                "service",
+                "package",
+                "consultation",
+                "warranty",
+                "guarantee",
             ];
-            
-            return keywords.filter(keyword => text.includes(keyword));
+
+            return keywords.filter((keyword) => text.includes(keyword));
         };
-        
+
         const botKeywords = extractKeywords(content);
-        const userKeywords = lastUserMessage ? extractKeywords(userQuestion) : [];
+        const userKeywords = lastUserMessage
+            ? extractKeywords(userQuestion)
+            : [];
         const allKeywords = [...new Set([...botKeywords, ...userKeywords])];
-        
+
         // Generate company-specific contextual replies
-        if (companyId === 'companyCyberMech') {
+        if (companyId === "companyCyberMech") {
             // Robot-related context
-            if (allKeywords.some(k => ['robot', 'android', 'humanoid'].includes(k))) {
+            if (
+                allKeywords.some((k) =>
+                    ["robot", "android", "humanoid"].includes(k),
+                )
+            ) {
                 // Different follow-ups based on what was mentioned
-                if (content.includes('price') || content.includes('cost') || userQuestion.includes('how much')) {
+                if (
+                    content.includes("price") ||
+                    content.includes("cost") ||
+                    userQuestion.includes("how much")
+                ) {
                     return [
                         "Can I finance a purchase?",
                         "What's included in the price?",
                         "Are there any discounts for bulk orders?",
-                        "How does the cost compare to competitors?"
+                        "How does the cost compare to competitors?",
                     ];
                 }
-                if (content.includes('feature') || content.includes('can') || content.includes('capability')) {
+                if (
+                    content.includes("feature") ||
+                    content.includes("can") ||
+                    content.includes("capability")
+                ) {
                     return [
                         "Can they recognize faces?",
                         "How long does the battery last?",
                         "Can they operate autonomously?",
-                        "How do they handle unexpected situations?"
+                        "How do they handle unexpected situations?",
                     ];
                 }
                 return [
                     "How much customization is possible?",
                     "What maintenance is required?",
                     "How do they compare to human workers?",
-                    "What's your most advanced model?"
+                    "What's your most advanced model?",
                 ];
             }
-            
+
             // Security and defense context
-            else if (allKeywords.some(k => ['security', 'defense', 'military', 'protection'].includes(k))) {
-                if (content.includes('military') || content.includes('contract')) {
+            else if (
+                allKeywords.some((k) =>
+                    ["security", "defense", "military", "protection"].includes(
+                        k,
+                    ),
+                )
+            ) {
+                if (
+                    content.includes("military") ||
+                    content.includes("contract")
+                ) {
                     return [
                         "What countries do you work with?",
                         "How do you handle ethical concerns?",
                         "What's your most advanced system?",
-                        "Do you have civilian versions?"
+                        "Do you have civilian versions?",
                     ];
                 }
                 return [
                     "How do you prevent hacking?",
                     "Are there any legal restrictions?",
                     "What kind of training is provided?",
-                    "Do you offer maintenance plans?"
+                    "Do you offer maintenance plans?",
                 ];
             }
         }
-        
+
         // IT Solutions context-aware replies
-        else if (companyId === 'companyIT') {
+        else if (companyId === "companyIT") {
             // Cloud computing context
-            if (allKeywords.some(k => ['cloud', 'computing', 'server', 'data'].includes(k))) {
-                if (content.includes('migration') || content.includes('moving')) {
+            if (
+                allKeywords.some((k) =>
+                    ["cloud", "computing", "server", "data"].includes(k),
+                )
+            ) {
+                if (
+                    content.includes("migration") ||
+                    content.includes("moving")
+                ) {
                     return [
                         "How long does migration typically take?",
                         "What about data security during transition?",
                         "Can you handle legacy systems?",
-                        "What's your uptime guarantee?"
+                        "What's your uptime guarantee?",
                     ];
                 }
                 return [
                     "What about data migration?",
                     "How does your pricing compare to AWS?",
                     "Do you offer hybrid cloud solutions?",
-                    "What compliance certifications do you have?"
+                    "What compliance certifications do you have?",
                 ];
             }
-            
+
             // Security context
-            else if (allKeywords.some(k => ['security', 'cyber', 'hack', 'breach', 'ransomware'].includes(k))) {
-                if (content.includes('breach') || content.includes('incident')) {
+            else if (
+                allKeywords.some((k) =>
+                    [
+                        "security",
+                        "cyber",
+                        "hack",
+                        "breach",
+                        "ransomware",
+                    ].includes(k),
+                )
+            ) {
+                if (
+                    content.includes("breach") ||
+                    content.includes("incident")
+                ) {
                     return [
                         "What's your response time?",
                         "Do you have a recovery process?",
                         "Do you offer forensic analysis?",
-                        "How do you prevent future incidents?"
+                        "How do you prevent future incidents?",
                     ];
                 }
                 return [
                     "Do you offer penetration testing?",
                     "What about employee security training?",
                     "How do you handle zero-day threats?",
-                    "Do you have 24/7 monitoring?"
+                    "Do you have 24/7 monitoring?",
                 ];
             }
         }
-        
+
         // Photography context-aware replies
-        else if (companyId === 'companyPhotography') {
+        else if (companyId === "companyPhotography") {
             // Wedding/event context
-            if (allKeywords.some(k => ['wedding', 'event', 'ceremony', 'party'].includes(k))) {
-                if (content.includes('package') || content.includes('price') || content.includes('cost')) {
+            if (
+                allKeywords.some((k) =>
+                    ["wedding", "event", "ceremony", "party"].includes(k),
+                )
+            ) {
+                if (
+                    content.includes("package") ||
+                    content.includes("price") ||
+                    content.includes("cost")
+                ) {
                     return [
                         "What's included in your basic package?",
                         "Do you offer video services too?",
                         "Are there any seasonal discounts?",
-                        "Do you require a deposit?"
+                        "Do you require a deposit?",
                     ];
                 }
                 return [
                     "How many photographers attend?",
                     "Do you have backup equipment?",
                     "How quickly do we get the photos?",
-                    "Can we create a shot list in advance?"
+                    "Can we create a shot list in advance?",
                 ];
             }
-            
+
             // Portrait context
-            else if (allKeywords.some(k => ['portrait', 'session', 'headshot', 'family'].includes(k))) {
-                if (content.includes('location') || content.includes('studio')) {
+            else if (
+                allKeywords.some((k) =>
+                    ["portrait", "session", "headshot", "family"].includes(k),
+                )
+            ) {
+                if (
+                    content.includes("location") ||
+                    content.includes("studio")
+                ) {
                     return [
                         "Do you charge extra for outdoor locations?",
                         "How many locations in one session?",
                         "Can we bring pets to the shoot?",
-                        "What about bad weather backup plans?"
+                        "What about bad weather backup plans?",
                     ];
                 }
                 return [
                     "Do you provide makeup services?",
                     "How many outfit changes are allowed?",
                     "Do you edit all the photos?",
-                    "Can we purchase additional images later?"
+                    "Can we purchase additional images later?",
                 ];
             }
         }
-        
-        // If there are multiple exchanges but no specific context detected,
-        // we might be in a deeper conversation - analyze the last bot message better
+
+        // If the conversation has progressed but no specific context is detected
         if (messages.length > 3) {
-            // Check if the last bot message is a direct answer that doesn't need follow-up
-            const lastBotContent = lastBotMessage.text.toLowerCase();
-            
-            // If it appears to be a conclusive response (pricing info, simple yes/no, etc.)
-            if (
-                (lastBotContent.includes('price') && (lastBotContent.includes('$') || lastBotContent.includes('cost'))) ||
-                lastBotContent.length < 80 || // Very short answers might not need follow-up
-                (lastBotContent.includes('thank') && lastBotContent.includes('you')) || // Thank you messages
-                lastBotContent.includes('anything else') // Bot already asked for follow-up
-            ) {
-                // Don't show generic suggestions for conclusive responses
-                return [];
-            }
-            
-            // For ongoing conversations without specific context
             return [
                 "Tell me more about that",
                 "Can you provide specific examples?",
                 "What are the advantages of this?",
-                "How does this compare to alternatives?"
+                "How does this compare to alternatives?",
             ];
         }
 
-        // For first-time messages or when context is lost, use defaults
-        // But if we've had more than 8 messages, don't keep showing default options
-        if (messages.length > 8) {
-            return [];
-        }
-        
+        // If no specific context is detected, use defaults
         return defaultRepliesByCompany[companyId] || [];
     };
     const [messages, setMessages] = useState([]);
@@ -253,18 +325,18 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 const newConversationId = crypto.randomUUID
                     ? crypto.randomUUID()
                     : Math.random().toString(36).substring(2, 15) +
-                    Math.random().toString(36).substring(2, 15);
+                      Math.random().toString(36).substring(2, 15);
                 localStorage.setItem("conversationId", newConversationId);
                 setConversationId(newConversationId);
 
                 // Add a welcome message
                 if (data.company) {
                     setMessages([
-                        { 
-                            sender: "bot", 
+                        {
+                            sender: "bot",
                             text: `Welcome to ${data.company.name}! How can I assist you today?`,
-                            timestamp: new Date().toISOString()
-                        }
+                            timestamp: new Date().toISOString(),
+                        },
                     ]);
                 }
             } catch (error) {
@@ -282,7 +354,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             storedConversationId = crypto.randomUUID
                 ? crypto.randomUUID()
                 : Math.random().toString(36).substring(2, 15) +
-                Math.random().toString(36).substring(2, 15);
+                  Math.random().toString(36).substring(2, 15);
             localStorage.setItem("conversationId", storedConversationId);
         }
 
@@ -291,7 +363,9 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         const fetchConversation = async () => {
             try {
                 // Try to get conversation from localStorage first
-                const localMessages = localStorage.getItem(`messages_${storedConversationId}`);
+                const localMessages = localStorage.getItem(
+                    `messages_${storedConversationId}`,
+                );
                 if (localMessages) {
                     const parsedMessages = JSON.parse(localMessages);
                     if (parsedMessages.length > 0) {
@@ -300,25 +374,35 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 }
 
                 // Then try to get from API
-                const res = await fetch(`/api/getConversation?conversationId=${storedConversationId}`);
+                const res = await fetch(
+                    `/api/getConversation?conversationId=${storedConversationId}`,
+                );
                 const data = await res.json();
 
                 if (data.messages && data.messages.length > 0) {
                     // Add timestamps if they don't exist
-                    const messagesWithTimestamps = data.messages.map(msg => {
+                    const messagesWithTimestamps = data.messages.map((msg) => {
                         if (!msg.timestamp) {
-                            return {...msg, timestamp: new Date().toISOString()};
+                            return {
+                                ...msg,
+                                timestamp: new Date().toISOString(),
+                            };
                         }
                         return msg;
                     });
                     setMessages(messagesWithTimestamps);
                     // Update local storage
-                    localStorage.setItem(`messages_${storedConversationId}`, JSON.stringify(messagesWithTimestamps));
+                    localStorage.setItem(
+                        `messages_${storedConversationId}`,
+                        JSON.stringify(messagesWithTimestamps),
+                    );
                 }
             } catch (error) {
                 console.error("Error fetching conversation history:", error);
                 // Try to load from local storage if API fails
-                const localMessages = localStorage.getItem(`messages_${storedConversationId}`);
+                const localMessages = localStorage.getItem(
+                    `messages_${storedConversationId}`,
+                );
                 if (localMessages) {
                     try {
                         setMessages(JSON.parse(localMessages));
@@ -337,16 +421,22 @@ export default function ChatbotUI({ companyId, onMinimize }) {
     }, [messages]);
 
     const formatTime = (timestamp) => {
-        if (!timestamp) return '';
+        if (!timestamp) return "";
         const date = new Date(timestamp);
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
     };
 
     const sendMessage = async () => {
         if (!userInput.trim()) return;
 
         const timestamp = new Date().toISOString();
-        const newMessages = [...messages, { sender: "user", text: userInput, timestamp }];
+        const newMessages = [
+            ...messages,
+            { sender: "user", text: userInput, timestamp },
+        ];
         setMessages(newMessages);
         setUserInput("");
         setIsTyping(true);
@@ -359,29 +449,38 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             });
 
             // Always save to localStorage as a backup
-            localStorage.setItem(`messages_${conversationId}`, JSON.stringify(newMessages));
+            localStorage.setItem(
+                `messages_${conversationId}`,
+                JSON.stringify(newMessages),
+            );
 
             const saveData = await saveResponse.json();
             if (saveData.error) {
-                console.warn("Server error saving conversation, using local storage:", saveData.error);
+                console.warn(
+                    "Server error saving conversation, using local storage:",
+                    saveData.error,
+                );
             }
         } catch (error) {
             console.error("Error saving conversation:", error);
             // Fallback to localStorage
-            localStorage.setItem(`messages_${conversationId}`, JSON.stringify(newMessages));
+            localStorage.setItem(
+                `messages_${conversationId}`,
+                JSON.stringify(newMessages),
+            );
         }
 
         try {
             // Get the last few messages for context (limit to last 6 to avoid token limits)
             const contextMessages = messages.slice(-6);
-            
+
             const res = await fetch("/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                    message: userInput, 
+                body: JSON.stringify({
+                    message: userInput,
                     companyId,
-                    conversationHistory: contextMessages 
+                    conversationHistory: contextMessages,
                 }),
             });
             console.log("res", res);
@@ -391,47 +490,68 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             if (data.reply) {
                 const botTimestamp = new Date().toISOString();
                 // Extract key topics from the bot's reply for future context
-                const keyPhrases = data.reply
-                    .toLowerCase()
-                    .match(/(?:robot|android|security|cloud|computing|cyber|wedding|event|portrait|session|price|cost|rate)/g) || [];
+                const keyPhrases =
+                    data.reply
+                        .toLowerCase()
+                        .match(
+                            /(?:robot|android|security|cloud|computing|cyber|wedding|event|portrait|session|price|cost|rate)/g,
+                        ) || [];
 
-                const updatedMessages = [...newMessages, { 
-                    sender: "bot", 
-                    text: data.reply,
-                    timestamp: botTimestamp,
-                    keyPhrases: Array.from(new Set(keyPhrases)) // Store unique key phrases for context
-                }];
+                const updatedMessages = [
+                    ...newMessages,
+                    {
+                        sender: "bot",
+                        text: data.reply,
+                        timestamp: botTimestamp,
+                        keyPhrases: Array.from(new Set(keyPhrases)), // Store unique key phrases for context
+                    },
+                ];
                 setMessages(updatedMessages);
 
                 try {
                     const saveResponse = await fetch("/api/saveConversation", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ conversationId, messages: updatedMessages }),
+                        body: JSON.stringify({
+                            conversationId,
+                            messages: updatedMessages,
+                        }),
                     });
 
                     // Always save to localStorage as a backup
-                    localStorage.setItem(`messages_${conversationId}`, JSON.stringify(updatedMessages));
+                    localStorage.setItem(
+                        `messages_${conversationId}`,
+                        JSON.stringify(updatedMessages),
+                    );
 
                     const saveData = await saveResponse.json();
                     if (saveData.error) {
-                        console.warn("Server error saving bot response, using local storage:", saveData.error);
+                        console.warn(
+                            "Server error saving bot response, using local storage:",
+                            saveData.error,
+                        );
                     }
                 } catch (error) {
                     console.error("Error saving bot response:", error);
                     // Fallback to localStorage
-                    localStorage.setItem(`messages_${conversationId}`, JSON.stringify(updatedMessages));
+                    localStorage.setItem(
+                        `messages_${conversationId}`,
+                        JSON.stringify(updatedMessages),
+                    );
                 }
             }
         } catch (error) {
             setIsTyping(false);
             console.error("Error fetching chatbot reply:", error);
             // Show error message to user
-            const errorMessages = [...newMessages, { 
-                sender: "bot", 
-                text: "I'm having trouble connecting right now. Please try again later.",
-                timestamp: new Date().toISOString()
-            }];
+            const errorMessages = [
+                ...newMessages,
+                {
+                    sender: "bot",
+                    text: "I'm having trouble connecting right now. Please try again later.",
+                    timestamp: new Date().toISOString(),
+                },
+            ];
             setMessages(errorMessages);
         }
     };
@@ -452,16 +572,17 @@ export default function ChatbotUI({ companyId, onMinimize }) {
         };
 
         // Add meta viewport tag for better mobile rendering
-        const metaViewport = document.createElement('meta');
-        metaViewport.name = 'viewport';
-        metaViewport.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+        const metaViewport = document.createElement("meta");
+        metaViewport.name = "viewport";
+        metaViewport.content =
+            "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no";
         document.head.appendChild(metaViewport);
 
         // Add touch event listeners
-        document.addEventListener('touchmove', preventZoom, { passive: false });
+        document.addEventListener("touchmove", preventZoom, { passive: false });
 
         return () => {
-            document.removeEventListener('touchmove', preventZoom);
+            document.removeEventListener("touchmove", preventZoom);
             document.head.removeChild(metaViewport);
         };
     }, []);
@@ -500,7 +621,11 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     left: -50%;
                     width: 200%;
                     height: 200%;
-                    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+                    background: radial-gradient(
+                        circle,
+                        rgba(255, 255, 255, 0.1) 0%,
+                        transparent 70%
+                    );
                     opacity: 0.6;
                     transform: rotate(30deg);
                 }
@@ -523,7 +648,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                     transition: transform 0.2s ease;
                 }
-                
+
                 .chat-header img:hover {
                     transform: scale(1.05);
                 }
@@ -531,7 +656,7 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 .status-indicator {
                     width: 10px;
                     height: 10px;
-                    background-color: #4CAF50;
+                    background-color: #4caf50;
                     border-radius: 50%;
                     margin-left: 5px;
                     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
@@ -579,9 +704,16 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     flex-direction: column;
                     gap: 18px;
                     background-color: #f5f7fa;
-                    background-image: 
-                        radial-gradient(circle at 25px 25px, rgba(0, 0, 0, 0.01) 2%, transparent 0%),
-                        radial-gradient(circle at 75px 75px, rgba(0, 0, 0, 0.01) 2%, transparent 0%);
+                    background-image: radial-gradient(
+                            circle at 25px 25px,
+                            rgba(0, 0, 0, 0.01) 2%,
+                            transparent 0%
+                        ),
+                        radial-gradient(
+                            circle at 75px 75px,
+                            rgba(0, 0, 0, 0.01) 2%,
+                            transparent 0%
+                        );
                     background-size: 100px 100px;
                     scrollbar-width: thin;
                 }
@@ -649,13 +781,17 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 }
 
                 .send-button::before {
-                    content: '';
+                    content: "";
                     position: absolute;
                     top: -50%;
                     left: -50%;
                     width: 200%;
                     height: 200%;
-                    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+                    background: radial-gradient(
+                        circle,
+                        rgba(255, 255, 255, 0.3) 0%,
+                        transparent 70%
+                    );
                     opacity: 0;
                     transition: opacity 0.3s ease;
                 }
@@ -798,7 +934,8 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 }
 
                 @keyframes typing {
-                    0%, 100% {
+                    0%,
+                    100% {
                         transform: translateY(0);
                     }
                     50% {
@@ -820,15 +957,15 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     .message {
                         max-width: 85%;
                     }
-                    
+
                     .chat-header {
                         padding: 16px 20px;
                     }
-                    
+
                     .message-input-container {
                         padding: 12px 16px;
                     }
-                    
+
                     .quick-replies {
                         padding: 10px 16px;
                     }
@@ -839,27 +976,30 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             <div className="chat-header">
                 <div className="header-main" onClick={onMinimize}>
                     {companyData?.company?.image && (
-                        <img src={companyData.company.image} alt={`${companyData.company.name} Logo`} />
+                        <img
+                            src={companyData.company.image}
+                            alt={`${companyData.company.name} Logo`}
+                        />
                     )}
                     <div>
                         Chat with {companyData?.company?.name || "AI Assistant"}
                     </div>
                 </div>
                 {/* <button 
-                    className="minimize-btn" 
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onMinimize();
-                    }} 
-                    aria-label="Minimize chat"
-                >−</button> */}
+                        className="minimize-btn" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onMinimize();
+                        }} 
+                        aria-label="Minimize chat"
+                    >−</button> */}
             </div>
 
             {/* Chat Messages */}
             <div className="chat-messages">
                 {messages.map((msg, index) => (
-                    <div 
-                        key={index} 
+                    <div
+                        key={index}
                         className={`message ${msg.sender}`}
                         data-time={formatTime(msg.timestamp)}
                     >
@@ -882,111 +1022,26 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Contextual Quick Reply Suggestions - only show if there are suggestions to display */}
-            {!isTyping && messages.length > 0 && (() => {
-                const suggestions = generateContextualReplies(messages, companyId);
-                return suggestions.length > 0 ? (
-                    <div className="quick-replies">
-                        {suggestions.map((reply, index) => (
-                            <button 
+            {/* Contextual Quick Reply Suggestions */}
+            {!isTyping && messages.length > 0 && (
+                <div className="quick-replies">
+                    {generateContextualReplies(messages, companyId).map(
+                        (reply, index) => (
+                            <button
                                 key={index}
                                 className="quick-reply-button"
                                 onClick={() => {
-                                    // Directly send without setting input field
-                                    const timestamp = new Date().toISOString();
-                                    const newMessages = [...messages, { sender: "user", text: reply, timestamp }];
-                                    setMessages(newMessages);
-                                    setIsTyping(true);
-                                
-                                // Save conversation
-                                try {
-                                    fetch("/api/saveConversation", {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({ conversationId, messages: newMessages }),
-                                    }).then(saveResponse => saveResponse.json())
-                                    .then(saveData => {
-                                        if (saveData.error) {
-                                            console.warn("Server error saving conversation, using local storage:", saveData.error);
-                                        }
-                                        // Always save to localStorage as a backup
-                                        localStorage.setItem(`messages_${conversationId}`, JSON.stringify(newMessages));
-                                    });
-                                } catch (error) {
-                                    console.error("Error saving conversation:", error);
-                                    // Fallback to localStorage
-                                    localStorage.setItem(`messages_${conversationId}`, JSON.stringify(newMessages));
-                                }
-                                
-                                // Get bot response
-                                try {
-                                    // Get the last few messages for context
-                                    const contextMessages = newMessages.slice(-6);
-                                    
-                                    fetch("/api/chatbot", {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({ 
-                                            message: reply, 
-                                            companyId,
-                                            conversationHistory: contextMessages 
-                                        }),
-                                    })
-                                    .then(res => res.json())
-                                    .then(data => {
-                                        setIsTyping(false);
-                                        if (data.reply) {
-                                            const botTimestamp = new Date().toISOString();
-                                            const keyPhrases = data.reply
-                                                .toLowerCase()
-                                                .match(/(?:robot|android|security|cloud|computing|cyber|wedding|event|portrait|session|price|cost|rate)/g) || [];
-                                            
-                                            const updatedMessages = [...newMessages, { 
-                                                sender: "bot", 
-                                                text: data.reply,
-                                                timestamp: botTimestamp,
-                                                keyPhrases: Array.from(new Set(keyPhrases))
-                                            }];
-                                            setMessages(updatedMessages);
-                                            
-                                            // Save the updated conversation with bot response
-                                            try {
-                                                fetch("/api/saveConversation", {
-                                                    method: "POST",
-                                                    headers: { "Content-Type": "application/json" },
-                                                    body: JSON.stringify({ conversationId, messages: updatedMessages }),
-                                                })
-                                                .then(saveResponse => saveResponse.json())
-                                                .then(saveData => {
-                                                    if (saveData.error) {
-                                                        console.warn("Server error saving bot response, using local storage:", saveData.error);
-                                                    }
-                                                    localStorage.setItem(`messages_${conversationId}`, JSON.stringify(updatedMessages));
-                                                });
-                                            } catch (error) {
-                                                console.error("Error saving bot response:", error);
-                                                localStorage.setItem(`messages_${conversationId}`, JSON.stringify(updatedMessages));
-                                            }
-                                        }
-                                    });
-                                } catch (error) {
-                                    setIsTyping(false);
-                                    console.error("Error fetching chatbot reply:", error);
-                                    const errorMessages = [...newMessages, { 
-                                        sender: "bot", 
-                                        text: "I'm having trouble connecting right now. Please try again later.",
-                                        timestamp: new Date().toISOString()
-                                    }];
-                                    setMessages(errorMessages);
-                                }
-                            }}
-                        >
-                            {reply}
-                        </button>
-                    ))}
-                    </div>
-                ) : null;
-            })()}
+                                    setUserInput(reply);
+                                    // Immediately send the message after setting input
+                                    setTimeout(() => sendMessage(), 50);
+                                }}
+                            >
+                                {reply}
+                            </button>
+                        ),
+                    )}
+                </div>
+            )}
 
             {/* Chat Input */}
             <div className="chat-input-container">
@@ -998,13 +1053,17 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     placeholder="Type a message..."
                     ref={inputRef}
                 />
-                <button 
-                    className="chat-send-btn" 
+                <button
+                    className="chat-send-btn"
                     onClick={sendMessage}
                     aria-label="Send message"
                     disabled={isTyping}
                 >
-                    <img src="/assets/icons/paper-plane-solid.svg" alt="Send" className="send-icon" />
+                    <img
+                        src="/assets/icons/paper-plane-solid.svg"
+                        alt="Send"
+                        className="send-icon"
+                    />
                 </button>
             </div>
         </div>
