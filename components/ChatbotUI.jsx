@@ -1001,7 +1001,6 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     <div
                         key={index}
                         className={`message ${msg.sender === "bot" ? "assistant" : "user"}`}
-                        data-time={formatTime(msg.timestamp)}
                     >
                         <div className="message-content">
                             {msg.sender === "bot" ? (
