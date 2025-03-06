@@ -1033,9 +1033,107 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                                 key={index}
                                 className="quick-reply-button"
                                 onClick={() => {
+                                    // Set the input first, then immediately send it
                                     setUserInput(reply);
-                                    // Immediately send the message after setting input
-                                    setTimeout(() => sendMessage(), 50);
+                                    // Create a new user message directly without using the input state
+                                    const timestamp = new Date().toISOString();
+                                    const newMessages = [
+                                        ...messages,
+                                        { sender: "user", text: reply, timestamp },
+                                    ];
+                                    setMessages(newMessages);
+                                    setUserInput("");
+                                    setIsTyping(true);
+
+                                    // Save to server and localStorage
+                                    try {
+                                        fetch("/api/saveConversation", {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({ conversationId, messages: newMessages }),
+                                        });
+                                        
+                                        localStorage.setItem(
+                                            `messages_${conversationId}`,
+                                            JSON.stringify(newMessages)
+                                        );
+                                    } catch (error) {
+                                        console.error("Error saving conversation:", error);
+                                        localStorage.setItem(
+                                            `messages_${conversationId}`,
+                                            JSON.stringify(newMessages)
+                                        );
+                                    }
+
+                                    // Get bot response
+                                    fetch("/api/chatbot", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({
+                                            message: reply,
+                                            companyId,
+                                            conversationHistory: messages.slice(-6),
+                                        }),
+                                    })
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        setIsTyping(false);
+                                        if (data.reply) {
+                                            const botTimestamp = new Date().toISOString();
+                                            const keyPhrases =
+                                                data.reply
+                                                    .toLowerCase()
+                                                    .match(
+                                                        /(?:robot|android|security|cloud|computing|cyber|wedding|event|portrait|session|price|cost|rate)/g,
+                                                    ) || [];
+
+                                            const updatedMessages = [
+                                                ...newMessages,
+                                                {
+                                                    sender: "bot",
+                                                    text: data.reply,
+                                                    timestamp: botTimestamp,
+                                                    keyPhrases: Array.from(new Set(keyPhrases)),
+                                                },
+                                            ];
+                                            setMessages(updatedMessages);
+
+                                            try {
+                                                fetch("/api/saveConversation", {
+                                                    method: "POST",
+                                                    headers: { "Content-Type": "application/json" },
+                                                    body: JSON.stringify({
+                                                        conversationId,
+                                                        messages: updatedMessages,
+                                                    }),
+                                                });
+
+                                                localStorage.setItem(
+                                                    `messages_${conversationId}`,
+                                                    JSON.stringify(updatedMessages)
+                                                );
+                                            } catch (error) {
+                                                console.error("Error saving bot response:", error);
+                                                localStorage.setItem(
+                                                    `messages_${conversationId}`,
+                                                    JSON.stringify(updatedMessages)
+                                                );
+                                            }
+                                        }
+                                    })
+                                    .catch(error => {
+                                        setIsTyping(false);
+                                        console.error("Error fetching chatbot reply:", error);
+                                        const errorMessages = [
+                                            ...newMessages,
+                                            {
+                                                sender: "bot",
+                                                text: "I'm having trouble connecting right now. Please try again later.",
+                                                timestamp: new Date().toISOString(),
+                                            },
+                                        ];
+                                        setMessages(errorMessages);
+                                    });
                                 }}
                             >
                                 {reply}
