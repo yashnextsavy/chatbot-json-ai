@@ -22,14 +22,15 @@
   "team": [
     {
       "name": "Michael Tran",
-      "role": "CEO & Founder",
-      "bio": "Experienced entrepreneur in cloud technologies and AI solutions."
+      "position": "CEO & Founder",
+      "bio":"Ceo & Founder since 2010 with experience of 15+ years in field"
     }
   ],
   "testimonials": [
     {
       "name": "Sophia Richardson, CTO of DataCorp",
-      "feedback": "Technology’s cloud solutions have transformed the way we manage our data."
+      "feedback": "Technology’s cloud solutions have transformed the way we manage our data.",
+      "company": "DataCorp"
     }
   ],
   "faq": [
@@ -70,6 +71,7 @@
     "phone": "+1-800-Technology",
     "email": "support@Technology.com",
     "hq_address": "Innovate Tower, Silicon Valley, USA",
-    "website": "https://www.Technology.com"
+    "website": "https://www.Technology.com",
+    "timing":"9:00AM - 7:00PM, MON-FRI, SAT 10:00AM - 4:00PM, SUN - Close"
   }
 }
