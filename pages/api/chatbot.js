@@ -14,6 +14,11 @@ export default async function handler(req, res) {
 
   const context = generatePromptContext(companyData);
 
+  if (!process.env.OPENROUTER_API_KEY) {
+    console.error("OPENROUTER_API_KEY environment variable is not set");
+    return res.status(500).json({ error: "API key configuration missing" });
+  }
+
   try {
     const response = await fetch(
       "https://openrouter.ai/api/v1/chat/completions",

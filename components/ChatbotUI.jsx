@@ -996,26 +996,29 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             </div>
 
             {/* Chat Messages */}
-            <div className="chat-messages">
+            <div className="message-list">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
-                        className={`message ${msg.sender}`}
+                        className={`message ${msg.sender === "bot" ? "assistant" : "user"}`}
                         data-time={formatTime(msg.timestamp)}
                     >
-                        {msg.sender === "bot" ? (
-                            <CustomMarkdown response={msg.text} />
-                        ) : (
-                            msg.text
-                        )}
+                        <div className="message-content">
+                            {msg.sender === "bot" ? (
+                                <CustomMarkdown response={msg.text} />
+                            ) : (
+                                msg.text
+                            )}
+                        </div>
+                        <div className="timestamp">{formatTime(msg.timestamp)}</div>
                     </div>
                 ))}
 
                 {isTyping && (
                     <div className="typing-indicator">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <div className="typing-dot"></div>
+                        <div className="typing-dot"></div>
+                        <div className="typing-dot"></div>
                     </div>
                 )}
 
@@ -1044,9 +1047,9 @@ export default function ChatbotUI({ companyId, onMinimize }) {
             )}
 
             {/* Chat Input */}
-            <div className="chat-input-container">
+            <div className="message-input-container">
                 <input
-                    className="chat-input"
+                    className="message-input"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -1054,16 +1057,15 @@ export default function ChatbotUI({ companyId, onMinimize }) {
                     ref={inputRef}
                 />
                 <button
-                    className="chat-send-btn"
+                    className="send-button"
                     onClick={sendMessage}
                     aria-label="Send message"
                     disabled={isTyping}
                 >
-                    <img
-                        src="/assets/icons/paper-plane-solid.svg"
-                        alt="Send"
-                        className="send-icon"
-                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
                 </button>
             </div>
         </div>
